@@ -45,4 +45,4 @@ gulp.task('watch', () => {
 
 gulp.task('build', gulp.parallel('copy-html', 'copy-api', 'copy-assets', 'build-js', 'build-sass'));
 
-gulp.task('dafault', gulp.parallel('watch', 'build'));
+gulp.task('default', gulp.parallel('watch', 'build'));
