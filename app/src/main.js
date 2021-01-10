@@ -1,43 +1,52 @@
-const Vue = require('vue');
-const axios = require('axios');
+const Editor = require('./editor.js');
 
-new Vue({
-    el: '#app',
-    data: {
-        'pageList': [],
-        'newPageName': '',
-    },
-    methods: {
-        deletePage(page) {
-            console.log(page);
-            axios
-                .post('./api/delete_html_page.php', {
-                    'name': page
-                })
-                .then( () => this.updatePageList() )
-        },
-        createPage() {
-            axios
-                .post('./api/create_new_html_page.php', {
-                    'name': this.newPageName
-                })
-                .then((response) => {
-                    console.log(response)
-                    this.updatePageList();
-                })
-        },
-        updatePageList() {
-            axios
-                .get('./api/')
-                .then((response) => {
-                    this.pageList = response.data
-                })
-        }
-    },
-    created() {
-        this.updatePageList();
-    },
-});
+window.editor = new Editor();
+
+window.onload = () => {
+    editor.open('index.html');
+};
+
+
+// const Vue = require('vue');
+// const axios = require('axios');
+
+// new Vue({
+//     el: '#app',
+//     data: {
+//         'pageList': [],
+//         'newPageName': '',
+//     },
+//     methods: {
+//         deletePage(page) {
+//             console.log(page);
+//             axios
+//                 .post('./api/delete_html_page.php', {
+//                     'name': page
+//                 })
+//                 .then( () => this.updatePageList() )
+//         },
+//         createPage() {
+//             axios
+//                 .post('./api/create_new_html_page.php', {
+//                     'name': this.newPageName
+//                 })
+//                 .then((response) => {
+//                     console.log(response)
+//                     this.updatePageList();
+//                 })
+//         },
+//         updatePageList() {
+//             axios
+//                 .get('./api/')
+//                 .then((response) => {
+//                     this.pageList = response.data
+//                 })
+//         }
+//     },
+//     created() {
+//         this.updatePageList();
+//     },
+// });
 
 // const $ = require('jquery');
 
