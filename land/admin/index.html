@@ -7,17 +7,24 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div style="margin-bottom: 50px;">
+    <div id="app">
         <h2>Введите имя страницы, которую хотите создать.</h2>
-        <input class="input-create" type="text" name="">
-        <button class="btn-create">Создать страницу</button>
+        <input class="input-create" type="text" v-model="newPageName">
+        <button class="btn-create" v-on:click="createPage">Создать страницу</button>
+
+        <ul>
+            <li v-for="(page, index ) in pageList">
+                {{ index }} -- {{ page }}
+                <a href="#" v-on:click="deletePage(page)">(X)</a>
+            </li>
+        </ul>
     </div>
 
-    <div style="margin-bottom: 50px;">
-        <h2>Введите имя страницы, которую хотите создать.</h2>
+<!--     <div style="margin-bottom: 50px;">
+        <h2>Введите имя страницы, которую хотите удалить.</h2>
         <input class="input-delete" type="text" name="">
         <button class="btn-delete">Удалить страницу</button>
-    </div>
+    </div> -->
     <script src="./bundle.js"></script>
 </body>
 </html>

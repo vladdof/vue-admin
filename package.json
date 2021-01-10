@@ -4,7 +4,9 @@
   "description": "admin",
   "main": "gulpfile.js",
   "dependencies": {
-    "jquery": "^3.5.1"
+    "axios": "^0.21.1",
+    "jquery": "^3.5.1",
+    "vue": "^2.6.12"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -20,5 +22,8 @@
     "gulp": "default"
   },
   "author": "vladdof",
-  "license": "ISC"
+  "license": "ISC",
+  "browser": {
+    "vue": "vue/dist/vue.common.js"
+  }
 }
