@@ -3,7 +3,7 @@ const Editor = require('./editor.js');
 window.editor = new Editor();
 
 window.onload = () => {
-    editor.open('index.html');
+    window.editor.open('index.html');
 };
 
 

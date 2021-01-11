@@ -6,7 +6,7 @@ const sass = require('gulp-sass');
 const dist = './land/admin';
 
 gulp.task('copy-html', () => {
-    return gulp.src('./app/src/index.html')
+    return gulp.src('./app/index.html')
         .pipe(gulp.dest(dist));
 });
 
@@ -36,7 +36,7 @@ gulp.task('build-sass', () => {
 
 
 gulp.task('watch', () => {
-    gulp.watch('./app/src/index.html', gulp.parallel('copy-html'));
+    gulp.watch('./app/index.html', gulp.parallel('copy-html'));
     gulp.watch('./app/assets/**/*.*', gulp.parallel('copy-assets'));
     gulp.watch('./app/api/**/*.*', gulp.parallel('copy-api'));
     gulp.watch('./app/src/**/*.js', gulp.parallel('build-js'));
