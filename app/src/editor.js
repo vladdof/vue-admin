@@ -1,5 +1,6 @@
 const axios = require('axios');
 const DOMHelper = require('./dom-helper');
+const EditorText = require('./editor-text');
 
 require('./iframe-load');
 
@@ -24,20 +25,30 @@ module.exports = class Editor {
             .then((html) => axios.post('./api/save_temp_page.php', { html }))
             .then(() => this.iframe.load('../temp.html'))
             .then(() => this.enableEditing())
+            .then(() => this.injectStyles())
     }
 
     enableEditing() {
         this.iframe.contentDocument.body.querySelectorAll('text-editor').forEach((element) => {
-            element.contentEditable = true;
-            element.addEventListener('input', () => {
-                this.onTextEdit(element);
-            })
+            const id = element.getAttribute('nodeId');
+            const virtualElement = this.virtualDom.body.querySelector(`[nodeId="${id}"]`);
+            new EditorText(element, virtualElement);
         })
     }
 
-    onTextEdit(element) {
-        const id = element.getAttribute('nodeId');
-        this.virtualDom.body.querySelector(`[nodeId="${id}"]`).innerHTML = element.innerHTML;
+    injectStyles() {
+        const style = this.iframe.contentDocument.createElement('style');
+        style.innerHTML = `
+            text-editor:hover {
+                outline: 3px solid orange;
+                outline-offset: 8px;
+            }
+            text-editor:focus {
+                outline: 3px solid green;
+                outline-offset: 8px;
+            }
+        `;
+        this.iframe.contentDocument.head.appendChild(style);
     }
 
     save() {
