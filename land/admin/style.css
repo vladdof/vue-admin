@@ -10080,11 +10080,15 @@ iframe {
 
 .panel {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 12px;
   height: 64px;
   box-sizing: border-box;
   border-bottom: 1px solid red; }
+  .panel button {
+    border-radius: 5px; }
+  .panel .drop {
+    width: 500px; }
 
 .loader {
   position: fixed;

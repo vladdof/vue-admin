@@ -1,6 +1,6 @@
 <?php
 
-    $_POST = json_decode(file_get_contents('php://input'), true);
+    // $_POST = json_decode(file_get_contents('php://input'), true);
 
     $name_file = '../../fsferggd.html';
 

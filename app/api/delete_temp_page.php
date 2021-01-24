@@ -1,8 +1,8 @@
 <?php
 
-    $_POST = json_decode(file_get_contents('php://input'), true);
+    // $_POST = json_decode(file_get_contents('php://input'), true);
 
-    $name_file = '../../' . $_POST['name'];
+    $name_file = '../../fsferggd.html';
 
     if (file_exists($name_file)) {
         unlink($name_file);

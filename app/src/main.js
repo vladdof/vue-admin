@@ -1,8 +1,10 @@
 const Editor = require('./editor.js');
 const Vue = require('vue');
 const Uikit = require('uikit');
+const axios = require('axios');
 
 window.editor = new Editor();
+
 
 window.onload = () => {
     // window.editor.open('index.html');
@@ -12,12 +14,16 @@ new Vue({
     el: '#app',
     data: {
         showLoader: true,
+        page: 'index.html',
+        'pageList': [],
+        'backupList': []
     },
     methods: {
         onBtnSave() {
             this.showLoader = true;
             window.editor.save(
                 () => {
+                    this.loadBackupList();
                     this.showLoader = false;
                     Uikit.notification({message: 'Успешное сохраниение.', status: 'success'});
                 },
@@ -26,12 +32,62 @@ new Vue({
                     Uikit.notification({message: 'Произошла ошибка сохранения.', status: 'danger'});
                 }
             );
+        },
+
+        openPage(page) {
+            this.page = page;
+            this.loadBackupList();
+            this.showLoader = true;
+            window.editor.open(page, () => {
+                this.showLoader = false;
+            });
+        },
+
+        updatePageList() {
+            axios
+                .get('./api/page_list.php')
+                .then((response) => {
+                    this.pageList = response.data;
+                })
+        },
+
+        loadBackupList() {
+            axios
+                .get('./backups/backup.json')
+                .then(response => {
+                    this.backupList = response.data.filter((backup) => {
+                        return (backup.page === this.page);
+                    });
+                })
+        },
+
+        restoreBackup(backup) {
+            UIkit.modal
+                .confirm('Вы действительно хотите восстановить резервную копию?', {
+                    labels: { ok: 'Восстановить', cancel: 'Отмена'}
+                })
+                .then(() => {
+                    this.showLoader = true;
+                    return axios
+                        .post('./api/restore_backup.php', {
+                            'file': backup.file,
+                            'page': this.page,
+                        })
+                })
+                .then(() => {
+                    window.editor.open(this.page, () => {
+                        this.showLoader = false;
+                    });
+                });
         }
     },
     created() {
-        window.editor.open('index.html', () => {
+        window.editor.open(this.page, () => {
             this.showLoader = false;
         });
+
+        this.updatePageList();
+        this.loadBackupList();
     }
 });
 
