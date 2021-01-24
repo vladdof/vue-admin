@@ -1,13 +1,40 @@
 const Editor = require('./editor.js');
+const Vue = require('vue');
+const Uikit = require('uikit');
 
 window.editor = new Editor();
 
 window.onload = () => {
-    window.editor.open('index.html');
+    // window.editor.open('index.html');
 };
 
+new Vue({
+    el: '#app',
+    data: {
+        showLoader: true,
+    },
+    methods: {
+        onBtnSave() {
+            this.showLoader = true;
+            window.editor.save(
+                () => {
+                    this.showLoader = false;
+                    Uikit.notification({message: 'Успешное сохраниение.', status: 'success'});
+                },
+                () => {
+                    this.showLoader = false;
+                    Uikit.notification({message: 'Произошла ошибка сохранения.', status: 'danger'});
+                }
+            );
+        }
+    },
+    created() {
+        window.editor.open('index.html', () => {
+            this.showLoader = false;
+        });
+    }
+});
 
-// const Vue = require('vue');
 // const axios = require('axios');
 
 // new Vue({

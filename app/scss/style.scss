@@ -1,10 +1,50 @@
+@import "../../node_modules/uikit/src/scss/variables-theme.scss";
+@import "../../node_modules/uikit/src/scss/mixins-theme.scss";
+@import "../../node_modules/uikit/src/scss/uikit-theme.scss";
+
+$panel_height: 64px;
+
 h1 {
     font-size: 1rem;
 }
+
 iframe {
     position: absolute;
-    top: 0;
+    top: $panel_height;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - #{$panel_height});
+}
+
+.panel {
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px;
+    height: $panel_height;
+    box-sizing: border-box;
+    border-bottom: 1px solid red;
+}
+
+.loader {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: rgba(black, .5);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s;
+
+    &.active {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    svg circle {
+        color: #fff;
+    }
 }

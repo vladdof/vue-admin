@@ -10,11 +10,11 @@ module.exports = class Editor {
         this.iframe = document.querySelector('iframe');
     }
 
-    open(page) {
+    open(page, callback) {
         this.current_page = page;
 
         axios
-            .get('../' + page)
+            .get('../' + page + '?rnd=' + Math.random())
             .then((res) => DOMHelper.parseStrToDom(res.data))
             .then(DOMHelper.wrapTextNodes)
             .then((dom) => {
@@ -26,6 +26,7 @@ module.exports = class Editor {
             .then(() => this.iframe.load('../temp.html'))
             .then(() => this.enableEditing())
             .then(() => this.injectStyles())
+            .then(callback)
     }
 
     enableEditing() {
@@ -51,12 +52,15 @@ module.exports = class Editor {
         this.iframe.contentDocument.head.appendChild(style);
     }
 
-    save() {
+    save(onSucces, onError) {
         const new_dom = this.virtualDom.cloneNode(this.virtualDom);
         DOMHelper.unwrapTextNodes(new_dom);
         const html = DOMHelper.serializeDomToStr(new_dom);
 
-        axios.post('./api/save_page.php', { pageName: this.current_page, html })
+        axios
+            .post('./api/save_page.php', { pageName: this.current_page, html })
+            .then(onSucces)
+            .catch(onError);
     }
 
 }
