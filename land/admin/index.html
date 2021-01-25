@@ -13,6 +13,7 @@
         <div class="panel">
             <div>
                 <button class="uk-button uk-button-default" uk-toggle="target: #modal-pages">Страницы</button>
+                <button class="uk-button uk-button-default" uk-toggle="target: #modal-meta">Редактор Тегов</button>
             </div>
             <div>
                 <button class="uk-button uk-button-primary" uk-toggle="target: #modal-save">Опубликовать</button>
@@ -27,6 +28,7 @@
                 </div>
             </div>
         </div>
+
         <div id="modal-save" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
                 <h2 class="uk-modal-title">Сохраниение</h2>
@@ -38,7 +40,7 @@
             </div>
         </div>
 
-        <div id="modal-pages" uk-modal>
+        <div id="modal-backup" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
                 <h2 class="uk-modal-title">Восстановить из бэкапа</h2>
                 <span v-if="backupList.length < 1">
@@ -55,7 +57,7 @@
             </div>
         </div>
 
-        <div id="modal-backup" uk-modal>
+        <div id="modal-pages" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
                 <h2 class="uk-modal-title">Выберите страницу</h2>
                 <ul class="uk-list uk-list-striped">
@@ -65,6 +67,30 @@
                 </ul>
                 <p class="uk-text-right">
                     <button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
+                </p>
+            </div>
+        </div>
+
+        <div id="modal-meta" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h2 class="uk-modal-title">Редактирование Мета тегов</h2>
+                <form>
+                    <div class="uk-margin">
+                        <label for="title">Title</label>
+                        <input id="title" class="uk-input" type="text" placeholder="Title" v-model="meta.title">
+                    </div>
+                    <div class="uk-margin">
+                        <label for="description">Description</label>
+                        <textarea id="description" class="uk-textarea" rows="5" placeholder="Description" v-model="meta.description"></textarea>
+                    </div>
+                    <div class="uk-margin">
+                        <label for="keywords">Keywords</label>
+                        <textarea id="keywords" class="uk-textarea" rows="5" placeholder="Keywords" v-model="meta.keywords"></textarea>
+                    </div>
+                </form>
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
+                    <button class="uk-button uk-button-primary uk-modal-close" type="button" @click="applyMeta">Применить</button>
                 </p>
             </div>
         </div>

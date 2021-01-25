@@ -16,7 +16,13 @@ new Vue({
         showLoader: true,
         page: 'index.html',
         'pageList': [],
-        'backupList': []
+        'backupList': [],
+
+        meta: {
+            title: '',
+            description: '',
+            keywords: ''
+        }
     },
     methods: {
         onBtnSave() {
@@ -40,6 +46,7 @@ new Vue({
             this.showLoader = true;
             window.editor.open(page, () => {
                 this.showLoader = false;
+                this.meta = window.editor.metaEditor.getMeta();
             });
         },
 
@@ -53,7 +60,7 @@ new Vue({
 
         loadBackupList() {
             axios
-                .get('./backups/backup.json')
+                .get('./backups/backups.json')
                 .then(response => {
                     this.backupList = response.data.filter((backup) => {
                         return (backup.page === this.page);
@@ -79,13 +86,14 @@ new Vue({
                         this.showLoader = false;
                     });
                 });
-        }
+        },
+
+        applyMeta() {
+            window.editor.metaEditor.setMeta(this.meta.title, this.meta.keywords, this.meta.description);
+        },
     },
     created() {
-        window.editor.open(this.page, () => {
-            this.showLoader = false;
-        });
-
+        this.openPage(this.page);
         this.updatePageList();
         this.loadBackupList();
     }
