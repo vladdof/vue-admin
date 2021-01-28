@@ -9,6 +9,8 @@
 <body>
     <iframe src="" frameborder="0"></iframe>
 
+    <input id="img-upload" type="file" accept="image/" style="display: none;">
+
     <div id="app">
         <div class="panel">
             <div>
@@ -97,6 +99,20 @@
 
         <div class="loader" v-bind:class="{ 'active': showLoader }">
             <span class="uk-margin-small-right" uk-spinner="ratio: 3"></span>
+        </div>
+
+        <!-- авторизация -->
+        <div class="login-container">
+            <div class="login">
+                <h2 class="uk-modal-title">Авторизация</h2>
+
+                <label for="password">Пароль:</label>
+                <input id="password" class="uk-input" type="password" placeholder="Пароль" v-model="meta.title">
+
+                <p class="uk-text-center">
+                    <button class="uk-button uk-button-primary uk-modal-close" type="button" @click="applyMeta">Вход</button>
+                </p>
+            </div>
         </div>
     </div>
 

@@ -48,4 +48,21 @@ module.exports = class DOMHelper {
         });
     }
 
+    static wrapImages(dom) {
+        dom.body.querySelectorAll('img').forEach((img, item) => {
+            console.log(img);
+            // var im_im = new Image();
+            // im_im.src = img.src;
+            // console.log(im_im.width)
+            img.setAttribute('editableimgid', item);
+        });
+
+        return dom;
+    }
+
+    static unwrapImages(dom) {
+        dom.body.querySelectorAll('[editableimgid]').forEach((img) => {
+            img.removeAttribute('editableimgid');
+        });
+    }
 }

@@ -10108,3 +10108,20 @@ iframe {
     opacity: 1; }
   .loader svg circle {
     color: #fff; }
+
+.login-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); }
+  .login-container .login {
+    width: 600px;
+    height: 300px;
+    padding: 30px;
+    border-radius: 4px;
+    background: #fff; }
