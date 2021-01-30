@@ -16,6 +16,10 @@ iframe {
     height: calc(100vh - #{$panel_height});
 }
 
+#app button {
+    border-radius: 5px;
+}
+
 .panel {
     display: flex;
     justify-content: space-between;
@@ -23,11 +27,6 @@ iframe {
     height: $panel_height;
     box-sizing: border-box;
     border-bottom: 1px solid red;
-
-
-    button {
-        border-radius: 5px;
-    }
 
     .drop {
         width: 500px;
@@ -70,9 +69,11 @@ iframe {
 
     .login {
         width: 600px;
-        height: 300px;
         padding: 30px;
         border-radius: 4px;
         background: #fff;
+    }
+    .login-error {
+        color: red;
     }
 }

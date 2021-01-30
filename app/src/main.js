@@ -17,7 +17,11 @@ window.vue = new Vue({
             title: '',
             description: '',
             keywords: ''
-        }
+        },
+
+        auth: false,
+        password: '',
+        loginError: false,
     },
     methods: {
         onBtnSave() {
@@ -64,7 +68,7 @@ window.vue = new Vue({
         },
 
         restoreBackup(backup) {
-            UIkit.modal
+            Uikit.modal
                 .confirm('Вы действительно хотите восстановить резервную копию?', {
                     labels: { ok: 'Восстановить', cancel: 'Отмена'}
                 })
@@ -77,14 +81,50 @@ window.vue = new Vue({
                         })
                 })
                 .then(() => {
-                    window.editor.open(this.page, () => {
-                        this.showLoader = false;
-                    });
+                    this.openPage(this.page);
                 });
         },
 
         applyMeta() {
             window.editor.metaEditor.setMeta(this.meta.title, this.meta.keywords, this.meta.description);
+        },
+
+        login() {
+            if (this.password.length > 5) {
+                axios
+                    .post('./api/login.php', {
+                        password: this.password
+                    })
+                    .then((res) => {
+                        console.log(res.data);
+
+                        if (res.data.auth === true) {
+                            this.auth = true;
+                            this.start();
+                        } else {
+                            this.loginError = true;
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            } else {
+                this.loginError = true;
+            }
+        },
+
+        logout() {
+            axios
+                .get('./api/log_out.php')
+                .then(() => {
+                    window.location.replace('/');
+                });
+        },
+
+        start() {
+            this.openPage(this.page);
+            this.updatePageList();
+            this.loadBackupList();
         },
 
         enableLoader() {
@@ -97,11 +137,21 @@ window.vue = new Vue({
 
         errorNotification(msg) {
             Uikit.notification({message: msg, status: 'danger'});
-        }
+        },
     },
     created() {
-        this.openPage(this.page);
-        this.updatePageList();
-        this.loadBackupList();
+        axios
+            .get('./api/check_auth.php')
+            .then(res => {
+                // this.auth = res.data.auth;
+
+                if (res.data.auth === true) {
+                    this.auth = true;
+                    this.start();
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 });

@@ -10078,6 +10078,9 @@ iframe {
   width: 100%;
   height: calc(100vh - 64px); }
 
+#app button {
+  border-radius: 5px; }
+
 .panel {
   display: flex;
   justify-content: space-between;
@@ -10085,8 +10088,6 @@ iframe {
   height: 64px;
   box-sizing: border-box;
   border-bottom: 1px solid red; }
-  .panel button {
-    border-radius: 5px; }
   .panel .drop {
     width: 500px; }
 
@@ -10121,7 +10122,8 @@ iframe {
   background: rgba(0, 0, 0, 0.5); }
   .login-container .login {
     width: 600px;
-    height: 300px;
     padding: 30px;
     border-radius: 4px;
     background: #fff; }
+  .login-container .login-error {
+    color: red; }

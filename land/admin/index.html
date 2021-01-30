@@ -12,7 +12,7 @@
     <input id="img-upload" type="file" accept="image/" style="display: none;">
 
     <div id="app">
-        <div class="panel">
+        <div class="panel" v-if="auth">
             <div>
                 <button class="uk-button uk-button-default" uk-toggle="target: #modal-pages">Страницы</button>
                 <button class="uk-button uk-button-default" uk-toggle="target: #modal-meta">Редактор Тегов</button>
@@ -24,10 +24,22 @@
                     <button class="uk-button uk-button-default btn-down"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><polygon points="5 7 15 7 10 12"></polygon></svg></button>
                     <div uk-drop="mode: click" class="drop">
                         <div class="uk-card uk-card-body uk-card-default">
-                            <button class="uk-button uk-button-default" uk-toggle="target: #modal-backup">Восстановить из бэкапа</button>
+                            <button class="uk-button uk-button-default uk-modal-close" uk-toggle="target: #modal-backup">Восстановить из бэкапа</button>
                         </div>
                     </div>
                 </div>
+                <button class="uk-button uk-button-default" uk-toggle="target: #modal-logout">Выход</button>
+            </div>
+        </div>
+
+        <div id="modal-logout" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h2 class="uk-modal-title">Выход</h2>
+                <p>Вы действительно хотите покинуть админку? Несохраненные изменения могут быть потеряны!</p>
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
+                    <button class="uk-button uk-button-primary uk-modal-close" type="button" @click="logout">Выход</button>
+                </p>
             </div>
         </div>
 
@@ -102,15 +114,15 @@
         </div>
 
         <!-- авторизация -->
-        <div class="login-container">
+        <div class="login-container" v-if="!auth">
             <div class="login">
                 <h2 class="uk-modal-title">Авторизация</h2>
 
                 <label for="password">Пароль:</label>
-                <input id="password" class="uk-input" type="password" placeholder="Пароль" v-model="meta.title">
-
+                <input id="password" class="uk-input" type="password" placeholder="Пароль" v-model="password" @keyup.enter="login">
+                <span class="login-error" v-if="loginError">Неверный пароль! Обратите внимание, пароль должен быть не меньше 5 символов.</span>
                 <p class="uk-text-center">
-                    <button class="uk-button uk-button-primary uk-modal-close" type="button" @click="applyMeta">Вход</button>
+                    <button class="uk-button uk-button-primary uk-modal-close" type="button" @click="login" >Вход</button>
                 </p>
             </div>
         </div>
