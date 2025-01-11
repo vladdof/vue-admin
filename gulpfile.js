@@ -41,7 +41,7 @@ gulp.task('build-js', () => {
 
 gulp.task('build-sass', () => {
     return gulp.src('./app/scss/**/*.scss')
-            .pipe(sass().on('error', sass.logError))
+            .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
             .pipe(gulp.dest(dist));
 });
 
