@@ -4,7 +4,7 @@ const buffer = require('vinyl-buffer');
 
 const source = require('vinyl-source-stream');
 const browserify = require('browserify');
-const sass = require('gulp-sass');
+const sass = require('gulp-dart-sass');
 const clean_css = require('gulp-clean-css');
 const autoprefixer = require('gulp-autoprefixer');
 
